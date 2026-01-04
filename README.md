@@ -2,7 +2,9 @@
 
 Documentation for building an AI inference server in 2026.
 
-## Getting Started
+## Hardware
+
+## Software
 
 See [Docs](docs) for instructions on how to set up the environment.
 
