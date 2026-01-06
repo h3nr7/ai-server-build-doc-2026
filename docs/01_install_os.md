@@ -41,6 +41,56 @@
 
 7.  Docker is also essential for running different versions of Python and different projects.
 
-    a. For nvidia driver (may not be needed as it is included in the Ubuntu as a Linux distribution) follow [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) and for container toolkit required within docker (including amazon linux), follow this [link](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/ubuntu.html
+    a. Installing Docker desktop for Ubuntu.  Follow [this](https://docs.docker.com/desktop/setup/install/linux/ubuntu/).
+
+    b. For nvidia driver (may not be needed as it is included in the Ubuntu as a Linux distribution) follow [this](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) 
+    
+    c. For container toolkit required within docker (including amazon linux), follow this [link](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/ubuntu.html
     ).
 
+8. Here are some commands to start and stop docker via commandline:
+    ```bash
+    systemctl --user start docker-desktop
+    systemctl --user stop docker-desktop
+    ```
+
+    Enable Docker to start on sign in
+    ```bash
+    systemctl --user enable docker-desktop
+    ```
+
+    TO check docker version
+    ```bash
+    docker --version
+    ```
+
+## vLLM
+
+Note: As of now, vLLM’s binaries are compiled with CUDA 12.1 and public PyTorch release versions by default.
+
+1. Activate conda environment
+
+    ```bash
+    conda create -n vllm python=3.9 -y
+    conda activate vllm
+    ```
+
+2. Install vLLM
+
+    ```bash
+    pip install vllm
+    ```
+
+Once installed here is a [quickstart](https://docs.vllm.ai/en/v0.5.0.post1/getting_started/quickstart.html) guide
+
+vLLM provides an HTTP server that implements OpenAI Completions and Chat API, most importantly via [Docker](https://docs.vllm.ai/en/v0.5.0.post1/serving/deploying_with_docker.html). [More info](https://docs.vllm.ai/en/v0.5.0.post1/serving/openai_compatible_server.html)
+
+[Here](https://docs.vllm.ai/en/v0.5.0.post1/serving/env_vars.html) are some Environment variables that can be set to configure the server.
+
+Detailed installation guide [here](https://docs.vllm.ai/en/v0.5.0.post1/getting_started/installation.html)
+
+## Llama cpp
+
+Install and run natively [instruction](https://github.com/ggml-org/llama.cpp/blob/master/docs/install.md).  To run an OpenAI API http server, follow [here](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md).
+
+Installation via [Docker](https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md)
