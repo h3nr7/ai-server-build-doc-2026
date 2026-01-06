@@ -2,8 +2,6 @@
 
 This document outlines the initial setup for the AI Server Build 2026 project.
 
-## Prerequisites
-
 - Linux OS
 - `curl` (for installing `uv`)
 
