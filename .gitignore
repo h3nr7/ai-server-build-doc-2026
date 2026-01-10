@@ -25,3 +25,6 @@ Thumbs.db
 *.log
 
 .webui_secret_key
+
+# Ignore model files
+models/*
