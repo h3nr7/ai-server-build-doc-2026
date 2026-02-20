@@ -16,11 +16,13 @@ elif [ "$unamestr" = 'FreeBSD' ] || [ "$unamestr" = 'Darwin' ]; then
 
 fi
 
-docker run --runtime nvidia --gpus all \
+docker run --runtime nvidia -d \
+  --gpus $NUM_GPU \
+  --name $NAME \
   -v ~/.cache/huggingface:/root/.cache/huggingface \
-  --env "HUGGING_FACE_HUB_TOKEN=<secret>" \
-  -p 8001:8001 \
+  --env "HUGGING_FACE_HUB_TOKEN=$HF_TOKEN" \
+  -p $PORT:$PORT \
   --ipc=host \
   vllm/vllm-openai:latest \
-  --model mistralai/Mistral-7B-v0.1
+  --model $MODEL_NAME \
 

@@ -1,4 +1,30 @@
 # VLLM Instructions
+
+After some trial and error, I have found the current sweetspot of using Qwen3 14B FP8.  Together with CLINE as my coding agent in VSCode it gives me the best combination at the moment.
+
+```
+NAME=vllm-qwen3-14b-fp8
+HF_TOKEN=SOME_TOKEN_NOT_USED
+# Use GPU 0
+CUDA_VISIBLE_DEVICES=0,1 
+HOST=0.0.0.0
+PORT=8001
+NUM_GPU=2
+MODEL_NAME=Qwen/Qwen3-14B-FP8
+MEM_UTILIZATION=0.85
+MAX_MODEL_LEN=32768
+D_TYPE=bfloat16
+# NCCL settings for better multi-GPU performance, without nvlink
+NCCL_P2P_LEVEL=NVL
+NCCL_IB_DISABLE=1
+MAX_NUM_SEQS=2
+BLOCK_SIZE=32
+SWAP_SPACE=8
+# Open web UI
+WEB_PORT=8002
+
+```
+
 ## Installation guide
 
 See [01_0_install_os.md](/docs/01_0_install_os.md)
@@ -47,60 +73,3 @@ To choose a distributed inference strategy for a single-model replica, use the f
 
 
 For details visit here for [more info](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/).
-
-## Install mDNS
-
-Multicast DNS (mDNS) on Ubuntu allows devices on a local network to resolve each other's hostnames to IP addresses without a central DNS server.
-
-### Using systemd-resolved
-
-Recent Ubuntu versions (like 24.04) can handle mDNS natively through systemd-resolved without Avahi. 
-- Global Enable:
-
-    Edit /etc/systemd/resolved.conf and set MulticastDNS=yes
-    LLMNR=no
-
-    Restart
-    ```
-    sudo systemctl restart systemd-resolved
-    ```
-
-    Enable multicast-dns
-    ```
-    sudo systemctl enable multicast-dns.service
-    sudo systemctl start multicast-dns.service
-    ```
-
-    Verify mDNS enabled
-    ```
-    resolvectl status
-    ```
-
-- Per-Interface Enable:
-
-    Ensure mDNS is enabled for specific network interfaces using Netplan or by creating an override in /etc/systemd/network/.
-- heck Status:
-    
-    Use resolvectl status to verify if mDNS is active on your links. 
-
-## Setup XRDP for remote desktop access
-
-Installation
-```
-sudo apt update 
-sudo apt install xrdp -y
-```
-
-Check
-```
-sudo systemctl status xrdp
-```
-
-
-## Setup SSH for remote access
-
-```
-sudo apt update
-sudo apt install ssh
-sudo ufw allow 22
-```
